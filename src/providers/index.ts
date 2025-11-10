@@ -2,6 +2,7 @@ import type { ImageProvider } from "../types";
 import { mapImgboxUrl } from "./imgbox";
 import { mapImxUrl } from "./imx";
 import { mapPixhostUrl } from "./pixhost";
+import { mapViprUrl } from "./vipr";
 
 /**
  * Registry of all supported image providers
@@ -10,4 +11,9 @@ import { mapPixhostUrl } from "./pixhost";
  * 2. Export an ImageProvider function
  * 3. Add it to this array
  */
-export const IMAGE_PROVIDERS: ImageProvider[] = [mapImgboxUrl, mapImxUrl, mapPixhostUrl];
+export const IMAGE_PROVIDERS: ImageProvider[] = [
+  mapImgboxUrl,
+  mapImxUrl,
+  mapPixhostUrl,
+  mapViprUrl,
+];
