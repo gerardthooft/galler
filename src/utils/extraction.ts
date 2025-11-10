@@ -1,21 +1,29 @@
-import type { Gallery } from "../types";
+import type { Gallery, ProviderError } from "../types";
 import { IMAGE_PROVIDERS } from "../providers";
 
-export function extractImages(html: string): Gallery[] {
+export function extractGalleries(html: string): {
+  galleries: Gallery[];
+  errors: ProviderError[];
+} {
   const posts = html.split("postcontainer");
-  const allGalleries: Gallery[] = [];
+  const galleries: Gallery[] = [];
+  const errors: ProviderError[] = [];
 
   posts.forEach((post) => {
-    const images = extractImgsFromPost(post);
-    if (images.length > 0) {
-      allGalleries.push(images);
+    const { gallery, errors } = extractGallery(post);
+    if (gallery.length > 0) {
+      galleries.push(gallery);
     }
+    errors.push(...errors);
   });
 
-  return allGalleries;
+  return { galleries, errors };
 }
 
-export function extractImgsFromPost(post: string): string[] {
+function extractGallery(post: string): {
+  gallery: string[];
+  errors: ProviderError[];
+} {
   const imgRegex = /<img[^>]+src="([^"]+)"/gi;
   const imgUrls: string[] = [];
   let match;
@@ -24,17 +32,21 @@ export function extractImgsFromPost(post: string): string[] {
     imgUrls.push(match[1]);
   }
 
-  const extractedImages: string[] = [];
+  const gallery: string[] = [];
+  const errors: ProviderError[] = [];
 
   for (const url of imgUrls) {
     for (const provider of IMAGE_PROVIDERS) {
-      const fullUrl = provider(url);
-      if (fullUrl) {
-        extractedImages.push(fullUrl);
+      const result = provider(url);
+
+      if (result.type === "matched") {
+        gallery.push(result.url);
+        break;
+      } else if (result.type === "error") {
+        errors.push(result.error);
         break;
       }
     }
   }
-
-  return extractedImages;
+  return { gallery, errors };
 }
