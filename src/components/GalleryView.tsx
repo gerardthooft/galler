@@ -30,6 +30,7 @@ export const GalleryView: Component<GalleryViewProps> = (props) => {
       src={props.gallery[imageIndex()]}
       alt="Gallery image"
       class="w-screen h-screen bg-black object-contain"
+      referrerPolicy="no-referrer"
     />
   );
 };

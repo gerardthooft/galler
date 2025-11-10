@@ -19,6 +19,7 @@ export const GridView: Component<GridViewProps> = (props) => {
               <img
                 src={gallery[0]}
                 class="h-1/3 w-auto cursor-pointer rounded-sm object-contain"
+                referrerPolicy="no-referrer"
                 onClick={() => setSelectedGallery(gallery)}
               />
             )}
