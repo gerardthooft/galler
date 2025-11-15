@@ -41,12 +41,11 @@ const App: Component = () => {
         setProviderErrors(errors);
       }
 
+      setAllGalleries(galleries);
+
       if (galleries.length === 0) {
         showError("No galleries found.");
-        return;
       }
-
-      setAllGalleries(galleries);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       showError(`Error: ${errorMessage}`);
@@ -54,30 +53,37 @@ const App: Component = () => {
   });
 
   return (
-    <Show
-      when={allGalleries()}
-      fallback={<LoadingView message={statusMessage()} isError={isError()} />}
-    >
-      {(galleries) => (
-        <>
-          <GridView galleries={galleries()} />
-          {providerErrors().length > 0 && (
-            <div class="bg-yellow-900/20 border border-yellow-600/50 text-yellow-200 px-4 py-3 rounded mb-4 mx-4 mt-4">
-              <p class="font-bold mb-2">Provider warnings ({providerErrors().length}):</p>
-              <ul class="list-disc list-inside space-y-1 text-sm">
-                {providerErrors().map((error) => (
-                  <li>
-                    <strong>{error.provider}:</strong> {error.reason}
-                    <br />
-                    <span class="text-yellow-400/70 text-xs ml-5">{error.url}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </>
+    <>
+      <Show
+        when={allGalleries()}
+        fallback={<LoadingView message={statusMessage()} isError={isError()} />}
+      >
+        {(galleries) => (
+          <>
+            <Show when={galleries().length === 0}>
+              <LoadingView message={statusMessage()} isError={isError()} />
+            </Show>
+            <Show when={galleries().length > 0}>
+              <GridView galleries={galleries()} />
+            </Show>
+          </>
+        )}
+      </Show>
+      {providerErrors().length > 0 && (
+        <div class="bg-red-950 text-red-100 p-4">
+          <h2 class="font-bold mb-2">Provider warnings ({providerErrors().length}):</h2>
+          <ul class="list-disc list-inside space-y-1 text-sm">
+            {providerErrors().map((error) => (
+              <li>
+                <strong>{error.provider}:</strong> {error.reason}
+                <br />
+                <span class="text-red-400 text-xs ml-5">{error.url}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-    </Show>
+    </>
   );
 };
 

@@ -10,18 +10,18 @@ export function extractGalleries(html: string): {
   const errors: ProviderError[] = [];
 
   posts.forEach((post) => {
-    const { gallery, errors } = extractGallery(post);
+    const { gallery, errors: galleryErrors } = extractGallery(post);
     if (gallery.length > 0) {
       galleries.push(gallery);
     }
-    errors.push(...errors);
+    errors.push(...galleryErrors);
   });
 
   return { galleries, errors };
 }
 
 function extractGallery(post: string): {
-  gallery: string[];
+  gallery: Gallery;
   errors: ProviderError[];
 } {
   const imgRegex = /<img[^>]+src="([^"]+)"/gi;
