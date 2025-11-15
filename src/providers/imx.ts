@@ -8,7 +8,7 @@ export const mapImxUrl: ImageProvider = (url: string) => {
     return { type: "skip" };
   }
 
-  const regex = /https:\/\/(?:image\.)?imx\.to\/u\/t\/(.*?)\.jpg/;
+  const regex = /https:\/\/(?:image\.)?imx\.to\/u\/t\/(.*?)\.(jpe?g)/;
   const match = url.match(regex);
   if (!match) {
     return {
@@ -16,13 +16,14 @@ export const mapImxUrl: ImageProvider = (url: string) => {
       error: {
         provider: "imx",
         url,
-        reason: "URL format does not match expected pattern: https://[image.]imx.to/u/t/{path}.jpg",
+        reason:
+          "URL format does not match expected pattern: https://[image.]imx.to/u/t/{path}.(jpg|jpeg)",
       },
     };
   }
 
   return {
     type: "matched",
-    url: `https://image.imx.to/u/i/${match[1]}.jpg`,
+    url: `https://image.imx.to/u/i/${match[1]}.${match[2]}`,
   };
 };
