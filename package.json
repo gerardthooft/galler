@@ -14,16 +14,17 @@
     "solid-js": "^1.9.10"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.16",
-    "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.17",
+    "prettier": "^3.7.4",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "vite": "^7.1.12",
+    "vite": "^7.2.6",
     "vite-plugin-solid": "^2.11.10"
   },
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.24.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "pnpm": ">=10"
   },
   "prettier": {
     "printWidth": 100
