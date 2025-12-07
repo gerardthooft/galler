@@ -5,7 +5,7 @@
  * @throws Error if the fetch fails
  */
 export async function fetchPage(url: string): Promise<string> {
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+  const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
   const response = await fetch(proxyUrl);
 
   if (!response.ok) {
