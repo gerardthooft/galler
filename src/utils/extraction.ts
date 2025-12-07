@@ -1,29 +1,29 @@
 import type { Gallery, ProviderError } from "../types";
 import { IMAGE_PROVIDERS } from "../providers";
 
-export function extractGalleries(html: string): {
+export async function extractGalleries(html: string): Promise<{
   galleries: Gallery[];
   errors: ProviderError[];
-} {
+}> {
   const posts = html.split("postcontainer");
   const galleries: Gallery[] = [];
   const errors: ProviderError[] = [];
 
-  posts.forEach((post) => {
-    const { gallery, errors: galleryErrors } = extractGallery(post);
+  for (const post of posts) {
+    const { gallery, errors: galleryErrors } = await extractGallery(post);
     if (gallery.length > 0) {
       galleries.push(gallery);
     }
     errors.push(...galleryErrors);
-  });
+  }
 
   return { galleries, errors };
 }
 
-function extractGallery(post: string): {
+async function extractGallery(post: string): Promise<{
   gallery: Gallery;
   errors: ProviderError[];
-} {
+}> {
   const imgRegex = /<img[^>]+src="([^"]+)"/gi;
   const imgUrls: string[] = [];
   let match;
@@ -32,15 +32,15 @@ function extractGallery(post: string): {
     imgUrls.push(match[1]);
   }
 
-  const gallery: string[] = [];
+  const gallery: Gallery = [];
   const errors: ProviderError[] = [];
 
   for (const url of imgUrls) {
     for (const provider of IMAGE_PROVIDERS) {
-      const result = provider(url);
+      const result = await provider(url);
 
       if (result.type === "matched") {
-        gallery.push(result.url);
+        gallery.push(result.image);
         break;
       } else if (result.type === "error") {
         errors.push(result.error);

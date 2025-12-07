@@ -35,13 +35,14 @@ const App: Component = () => {
       const html = await fetchPage(targetUrl);
 
       showLoading("Extracting images...");
-      const { galleries, errors } = extractGalleries(html);
+      const { galleries, errors } = await extractGalleries(html);
 
       if (errors.length > 0) {
         setProviderErrors(errors);
       }
 
       setAllGalleries(galleries);
+      console.log(galleries);
 
       if (galleries.length === 0) {
         showError("No galleries found.");

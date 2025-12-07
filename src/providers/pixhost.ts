@@ -1,9 +1,10 @@
 import type { ImageProvider } from "../types";
+import { lazy } from "../utils/lazy";
 
 /**
  * Example: https://t1.pixhost.to/thumbs/aaa/bbb.jpg -> https://img1.pixhost.to/images/aaa/bbb.jpg
  */
-export const mapPixhostUrl: ImageProvider = (url: string) => {
+export const mapPixhostUrl: ImageProvider = async (url: string) => {
   if (!url.includes("pixhost.to")) {
     return { type: "skip" };
   }
@@ -22,8 +23,13 @@ export const mapPixhostUrl: ImageProvider = (url: string) => {
   }
 
   const [, subdomain, path, extension] = match;
+  const fullUrl = `https://img${subdomain}.pixhost.to/images/${path}.${extension}`;
+
   return {
     type: "matched",
-    url: `https://img${subdomain}.pixhost.to/images/${path}.${extension}`,
+    image: {
+      thumbnail: url,
+      full: lazy(async () => fullUrl),
+    },
   };
 };

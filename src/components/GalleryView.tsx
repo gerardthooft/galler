@@ -1,4 +1,4 @@
-import { createSignal, type Component } from "solid-js";
+import { createSignal, createEffect, type Component } from "solid-js";
 import type { Gallery } from "../types";
 
 interface GalleryViewProps {
@@ -8,6 +8,19 @@ interface GalleryViewProps {
 
 export const GalleryView: Component<GalleryViewProps> = (props) => {
   const [imageIndex, setImageIndex] = createSignal<number>(0);
+  const [currentUrl, setCurrentUrl] = createSignal<string>("");
+
+  createEffect(() => {
+    const image = props.gallery[imageIndex()];
+
+    setCurrentUrl(image.thumbnail);
+
+    image.full
+      .then((url) => setCurrentUrl(url))
+      .catch((error) => {
+        console.error("Failed to resolve full image:", error);
+      });
+  });
 
   /**
    * Click top 20% to return to grid
@@ -27,7 +40,7 @@ export const GalleryView: Component<GalleryViewProps> = (props) => {
   return (
     <img
       onClick={handleClick}
-      src={props.gallery[imageIndex()]}
+      src={currentUrl()}
       alt="Gallery image"
       class="w-screen h-screen bg-black object-contain"
       referrerPolicy="no-referrer"

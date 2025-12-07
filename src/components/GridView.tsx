@@ -17,7 +17,7 @@ export const GridView: Component<GridViewProps> = (props) => {
           <For each={props.galleries}>
             {(gallery) => (
               <img
-                src={gallery[0]}
+                src={gallery[0].thumbnail}
                 class="h-1/3 w-auto cursor-pointer rounded-sm object-contain"
                 referrerPolicy="no-referrer"
                 onClick={() => setSelectedGallery(gallery)}

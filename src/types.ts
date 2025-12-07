@@ -1,6 +1,13 @@
+import type { Lazy } from "./utils/lazy";
+
 export type ViewType = "loading" | "error" | "grid" | "gallery";
 
-export type Gallery = string[];
+export type GalleryImage = {
+  thumbnail: string;
+  full: Lazy<string>;
+};
+
+export type Gallery = GalleryImage[];
 
 export type ProviderError = {
   provider: string;
@@ -9,7 +16,7 @@ export type ProviderError = {
 };
 
 export type ImageProviderResult =
-  | { type: "matched"; url: string }
+  | { type: "matched"; image: GalleryImage }
   | { type: "error"; error: ProviderError }
   | { type: "skip" };
 
@@ -19,4 +26,4 @@ export type ImageProviderResult =
  * - The URL should be handled by this provider but couldn't be parsed (error)
  * - The URL is not for this provider (skip)
  */
-export type ImageProvider = (url: string) => ImageProviderResult;
+export type ImageProvider = (url: string) => Promise<ImageProviderResult>;

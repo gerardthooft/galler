@@ -2,6 +2,7 @@ import type { ImageProvider } from "../types";
 import { mapImgboxUrl } from "./imgbox";
 import { mapImxUrl } from "./imx";
 import { mapPixhostUrl } from "./pixhost";
+import { mapTurboimagehostUrl } from "./turboimagehost";
 import { mapViprUrl } from "./vipr";
 
 /**
@@ -15,5 +16,6 @@ export const IMAGE_PROVIDERS: ImageProvider[] = [
   mapImgboxUrl,
   mapImxUrl,
   mapPixhostUrl,
+  mapTurboimagehostUrl,
   mapViprUrl,
 ];

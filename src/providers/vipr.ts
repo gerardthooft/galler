@@ -1,9 +1,10 @@
 import type { ImageProvider } from "../types";
+import { lazy } from "../utils/lazy";
 
 /**
  * Example: https://i7.vipr.im/th/xxx/zzz.jpg -> https://i7.vipr.im/i/xxx/zzz.jpg
  */
-export const mapViprUrl: ImageProvider = (url: string) => {
+export const mapViprUrl: ImageProvider = async (url: string) => {
   if (!url.includes("vipr.im")) {
     return { type: "skip" };
   }
@@ -21,8 +22,13 @@ export const mapViprUrl: ImageProvider = (url: string) => {
   }
 
   const [, subdomain, path, extension] = match;
+  const fullUrl = `https://${subdomain}.vipr.im/i/${path}.${extension}`;
+
   return {
     type: "matched",
-    url: `https://${subdomain}.vipr.im/i/${path}.${extension}`,
+    image: {
+      thumbnail: url,
+      full: lazy(async () => fullUrl),
+    },
   };
 };
