@@ -9,20 +9,18 @@ export const mapViprUrl: ImageProvider = async (url: string) => {
     return { type: "skip" };
   }
 
-  const match = url.match(/https:\/\/(i\d+)\.vipr\.im\/th\/(.+)\.(jpe?g|png)/);
-  if (!match) {
+  if (!url.includes("/th/")) {
     return {
       type: "error",
       error: {
         provider: "vipr",
         url,
-        reason: "URL format does not match expected pattern: https://i{N}.vipr.im/th/{path}.{ext}",
+        reason: "URL does not contain /th/ segment",
       },
     };
   }
 
-  const [, subdomain, path, extension] = match;
-  const fullUrl = `https://${subdomain}.vipr.im/i/${path}.${extension}`;
+  const fullUrl = url.replace(/\/th\//, "/i/");
 
   return {
     type: "matched",
