@@ -1,6 +1,7 @@
 import { createSignal, onMount, Show, type Component } from "solid-js";
 import { LoadingView } from "./components/LoadingView";
 import { GridView } from "./components/GridView";
+import { UrlForm } from "./components/UrlForm";
 import type { Gallery, ProviderError } from "./types";
 import { fetchPage } from "./utils/fetch";
 import { extractGalleries } from "./utils/extraction";
@@ -10,6 +11,7 @@ const App: Component = () => {
   const [isError, setIsError] = createSignal<boolean>(false);
   const [allGalleries, setAllGalleries] = createSignal<Gallery[] | null>(null);
   const [providerErrors, setProviderErrors] = createSignal<ProviderError[]>([]);
+  const [showForm, setShowForm] = createSignal<boolean>(false);
 
   const showLoading = (message: string) => {
     setStatusMessage(message);
@@ -26,7 +28,7 @@ const App: Component = () => {
     const targetUrl = urlParams.get("url");
 
     if (!targetUrl) {
-      showError("No URL provided. Usage: ?url=https://example.com/page");
+      setShowForm(true);
       return;
     }
 
@@ -55,6 +57,9 @@ const App: Component = () => {
 
   return (
     <>
+      <Show when={showForm()}>
+        <UrlForm />
+      </Show>
       <Show
         when={allGalleries()}
         fallback={<LoadingView message={statusMessage()} isError={isError()} />}
