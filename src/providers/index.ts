@@ -1,4 +1,15 @@
 import type { ImageProvider } from "../types";
+import {
+  mapAcidimgUrl,
+  mapImagetwistUrl,
+  mapImagevenueUrl,
+  mapImagezillaUrl,
+  mapImgspiceUrl,
+  mapPimpandhostUrl,
+  mapPixrouteUrl,
+  mapPixxxelsUrl,
+  mapPostimgUrl,
+} from "./stubs";
 import { mapImagebamUrl } from "./imagebam";
 import { mapImgboxUrl } from "./imgbox";
 import { mapImxUrl } from "./imx";
@@ -20,4 +31,13 @@ export const IMAGE_PROVIDERS: ImageProvider[] = [
   mapPixhostUrl,
   mapTurboimagehostUrl,
   mapViprUrl,
+  mapAcidimgUrl,
+  mapImagetwistUrl,
+  mapImagezillaUrl,
+  mapImgspiceUrl,
+  mapPimpandhostUrl,
+  mapPixxxelsUrl,
+  mapPostimgUrl,
+  mapImagevenueUrl,
+  mapPixrouteUrl,
 ];
