@@ -1,7 +1,6 @@
 import type { ImageProvider } from "../types";
 import {
   mapAcidimgUrl,
-  mapImagetwistUrl,
   mapImagevenueUrl,
   mapImagezillaUrl,
   mapImgspiceUrl,
@@ -11,6 +10,7 @@ import {
   mapPostimgUrl,
 } from "./stubs";
 import { mapImagebamUrl } from "./imagebam";
+import { mapImagetwistUrl } from "./imagetwist";
 import { mapImgboxUrl } from "./imgbox";
 import { mapImxUrl } from "./imx";
 import { mapPixhostUrl } from "./pixhost";

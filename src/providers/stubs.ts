@@ -21,7 +21,6 @@ const stub =
   };
 
 export const mapAcidimgUrl: ImageProvider = stub("acidimg.cc");
-export const mapImagetwistUrl: ImageProvider = stub("imagetwist.com");
 export const mapImagezillaUrl: ImageProvider = stub("imagezilla.com");
 export const mapImgspiceUrl: ImageProvider = stub("imgspice.com");
 export const mapPimpandhostUrl: ImageProvider = stub("pimpandhost.com");
