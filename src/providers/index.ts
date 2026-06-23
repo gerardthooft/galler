@@ -1,4 +1,5 @@
 import type { ImageProvider } from "../types";
+import { mapImagebamUrl } from "./imagebam";
 import { mapImgboxUrl } from "./imgbox";
 import { mapImxUrl } from "./imx";
 import { mapPixhostUrl } from "./pixhost";
@@ -13,6 +14,7 @@ import { mapViprUrl } from "./vipr";
  * 3. Add it to this array
  */
 export const IMAGE_PROVIDERS: ImageProvider[] = [
+  mapImagebamUrl,
   mapImgboxUrl,
   mapImxUrl,
   mapPixhostUrl,
